@@ -1,4 +1,4 @@
-# Definir una funciÃ³n max_de_tres(), que tome tres nÃºmeros como argumentos y devuelva el mayor de ellos.
+# Definir una función max_de_tres(), que tome tres números como argumentos y devuelva el mayor de ellos.
 
 
 def max_de_tres(a, b, c):

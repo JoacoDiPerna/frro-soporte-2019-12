@@ -1,4 +1,4 @@
-# Escribir una funciÃ³n que tome un carÃ¡cter y devuelva True si es una vocal, de lo contrario devuelve False.
+# Escribir una función que tome un caracter y devuelva True si es una vocal, de lo contrario devuelve False.
 
 
 def es_vocal(char):

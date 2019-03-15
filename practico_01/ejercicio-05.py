@@ -1,5 +1,5 @@
 # Escribir una función multip() que multiplique respectivamente todos los números de una lista.
-# Por ejemplo: multip([1,2,3,4]) deberÃ­a devolver 24.
+# Por ejemplo: multip([1,2,3,4]) deberá devolver 24.
 
 def multip(lista):
     retorno = 1

@@ -1,4 +1,4 @@
-# Escribir una función mas_larga() que tome una lista de palabras y devuelva la más larga
+# Escribir una función mas_larga() que tome una lista de palabras y devuelva la más larga.
 
 # La función devolverá la primer palabra "más larga".
 def mas_larga(lista):

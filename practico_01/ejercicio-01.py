@@ -1,4 +1,4 @@
-# Definir una funciÃ³n max() que tome como argumento dos nÃºmeros y devuelva el mayor de ellos.
+# Definir una función max() que tome como argumento dos números y devuelva el mayor de ellos.
 
 
 def max(a, b):
