@@ -1,12 +1,19 @@
-# Implementar las funciones superposicion_x(), que tomen dos listas y devuelva un booleano en base a
-# si tienen al menos 1 elemento en común.
+# Escribir una función mas_larga() que tome una lista de palabras y devuelva la más larga
 
-
-# se debe implementar utilizando bucles anidados.
-def superposicion_loop(lista_1, lista_2):
+# La función devolverá la primer palabra "más larga".
+def mas_larga(lista):
+    length = 0
+    index = 0
+    for i in range(0, len(lista)):
+        if len(lista[i]) > length:
+            length = len(lista[i])
+            index = i
+    return lista[i]
     pass
 
 
-# se debe implementar utilizando conjuntos (sets).
-def superposicion_set(lista_1, lista_2):
-    pass
+lista = ["caldo", "pepas", "manolo", "diaspora"]
+
+assert (mas_larga(lista) == "diaspora")
+
+assert (mas_larga(lista) != "manolo")

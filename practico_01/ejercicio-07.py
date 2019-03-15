@@ -1,7 +1,15 @@
-# Implementar la función numeros_al_final(), que mueve todos los elementos numéricos
-# de lista al final de esta. Devuelve la lista.
+# Definir una función es_palindromo() que reconoce palíndromos (es decir, palabras que tienen el mismo aspecto escritas invertidas)
+# ejemplo: es_palindromo ("radar") tendría que devolver True.
 
 
-# Resolver sin utilizar lista auxiliar
-def numeros_al_final(lista):
+# La función no distingue entre mayúsculas y minúsculas.
+def es_palindromo(string):
+    return string.lower() == string[::-1].lower()
     pass
+
+
+assert (es_palindromo("Menem") is True)
+
+assert (es_palindromo("Neuquen") is True)
+
+assert (es_palindromo("falso") is False)
