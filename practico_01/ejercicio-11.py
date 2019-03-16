@@ -17,3 +17,11 @@ assert (cantidad_digitos(0) == 1)
 assert (cantidad_digitos(10) == 2)
 
 assert (cantidad_digitos(99999) == 5)
+
+
+#Otra forma
+def cant_dig(nro):
+    return len(str(abs(nro)))
+    pass
+
+

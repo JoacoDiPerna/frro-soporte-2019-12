@@ -13,3 +13,10 @@ assert (inversa("luz") == "zul")
 assert (inversa("z") == "z")
 
 assert (inversa("") == "")
+
+
+#Otra forma
+def inversa1(cadena):
+        return sorted(cadena, reverse = True)
+        pass
+

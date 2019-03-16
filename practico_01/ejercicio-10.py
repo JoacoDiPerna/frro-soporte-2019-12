@@ -17,3 +17,10 @@ lista = ["caldo", "pepas", "manolo", "diaspora"]
 assert (mas_larga(lista) == "diaspora")
 
 assert (mas_larga(lista) != "manolo")
+
+
+#Otra forma
+def mas_larg(lista1):
+    return sorted(lista1, key=len)
+    pass
+
