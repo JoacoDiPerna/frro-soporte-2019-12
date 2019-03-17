@@ -7,16 +7,17 @@
 def busca_max_min():
     lista = []
     valores = input("Ingresar valor ('fin' para finalizar):")
-    while valores.lower()!='fin':
+    while valores.lower() != 'fin':
         lista.append(valores)
         valores = input("Ingresar valor ('fin' para finalizar):")
     lista.sort()
     min = lista[0]
     lista.reverse()
     max = lista[0]
-    print("El valor maximo es el numero:",max)
-    print("El valor minimo es el numero:",min)
+    print("El valor maximo es el numero:", max)
+    print("El valor minimo es el numero:", min)
     pass
 
-#Probar por consola
+
+# Probar por consola.
 busca_max_min()

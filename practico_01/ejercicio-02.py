@@ -22,7 +22,8 @@ assert (max_de_tres(37, 4, 6) == 37)
 
 assert (max_de_tres(3, 3, 3) == 3)
 
-#Otra forma
+
+# Otra forma.
 def max_tres(a, b, c):
-    return max(max(a,b),c)
+    return max(max(a, b), c)
     pass

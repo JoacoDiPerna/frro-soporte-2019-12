@@ -15,8 +15,7 @@ assert (inversa("z") == "z")
 assert (inversa("") == "")
 
 
-#Otra forma
+# Otra forma.
 def inversa1(cadena):
-        return sorted(cadena, reverse = True)
-        pass
-
+    return sorted(cadena, reverse=True)
+    pass

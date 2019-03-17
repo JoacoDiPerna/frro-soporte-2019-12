@@ -26,10 +26,10 @@ assert (es_primo(4) is False)
 assert (es_primo(101) is True)
 
 
-#Otra forma
+# Otra forma..
 def isPrime(Number):
     if Number < 2:
         return False
     else:
-        return 2 in [Number,pow(2, Number, Number)]
+        return 2 in [Number, pow(2, Number, Number)]
     pass
