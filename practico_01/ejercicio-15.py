@@ -18,7 +18,7 @@ def buscaValores():
     print("El valor minimo es el numero: %s" %min)
     print("El valor maximo es el numero: %s" %max)
 
-#Probar por consola
+#Probar por consola.
 buscaValores()
 
 
