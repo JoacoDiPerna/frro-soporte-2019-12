@@ -4,67 +4,45 @@
 # donde se puede caminar, (x,y) es el punto donde comienza a buscarse la salida y
 # (a,b), la salida del laberinto .
 
-
-# Entendemos que no se está aplicando la recursividad como la consigna lo pide.
-# Además el algoritmo sólo sigue un camino. Es decir, no vuelve atrás si se topa con un camino sin salida.
-# Por ende sólo resuelve los laberintos que tienen un sólo camino válido.
-recorrido = []
-
-
-def buscar_salida(matriz, entrada, salida):
-    global recorrido
-
-    def buscar_siguiente_movimiento(matriz, x, y):
-        ancho = len(matriz[0])
-        alto = len(matriz)
-        posicion = (x, y)
-        for i in range(-1, 2):
-            for j in range(-1, 2):
-                if (x + i, y + j) not in recorrido and x + i >= 0 and y + j >= 0 and x + i <= alto - 1 and \
-                        y + j <= ancho - 1 and (x + i, y + j) != (x, y) and matriz[x + i][y + j] is True:
-                    posicion = (x + i, y + j)
-                    return posicion
-        return posicion
-        pass
-
-    band = True
-    actual = entrada
-
-    if actual == salida:
-        return band
-
-    recorrido.append(entrada)
-    x, y = entrada
-
-    siguiente_movimiento = buscar_siguiente_movimiento(matriz, x, y)
-
-    while band and siguiente_movimiento != salida:
-        if siguiente_movimiento != actual:
-            actual = siguiente_movimiento
-            recorrido.append(actual)
-            x, y = actual
-            siguiente_movimiento = buscar_siguiente_movimiento(matriz, x, y)
-        else:
-            band = False
-    return band
-
-    pass
+def resuelveLab( laberinto , entrada , salida ):
+    # returns a list of the paths taken
+    m, n = salida
+    x , y = entrada
+    if laberinto [m][n] is True:
+        return print('La salida ingresada no es una salida valida para el laberinto.')
+    elif laberinto[x][y] is True:
+        return print('La entrada ingresada no tiene camino posible para recorrer.')
+    else:
+        C = len(laberinto[0])
+        R = len(laberinto)
+        if entrada == salida:
+            return [salida]
+        elif entrada ==( R  - 1, C -1 ):
+            return [ ( R -1 , C -1 ) ]
+        if x + 1 < R and laberinto[x+1][y] is False:
+            a = resuelveLab( laberinto , ( x + 1 , y ) , salida )
+            if a != None:
+                return [ (x , y ) ] + a
+        if y + 1 < C and laberinto[x][y+1] is False:
+            b = resuelveLab( laberinto , (x , y + 1) , salida )
+            if  b != None:
+                return [ ( x , y ) ] + b
 
 
-matriz = [[True, True, False],
-          [False, True, False],
-          [False, True, True],
-          [False, False, True]]
-entrada = (0, 0)
-salida = (3, 2)
-recorrido = []
-assert (buscar_salida(matriz, entrada, salida) is True)
+laberinto = [[False, False, False, True],
+             [False, True, True, True],
+             [False, True, True, False],
+             [False, False, True, True],
+             [False, False, False, False]]
 
-matriz = [[True, True, False],
-          [False, False, False],
-          [False, True, True],
-          [False, False, False]]
-entrada = (0, 0)
-salida = (2, 2)
-recorrido = []
-assert (buscar_salida(matriz, entrada, salida) is False)
+print (resuelveLab(laberinto,(0,0),(4,3)))
+#Devuelve--> [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (4, 1), (4, 2), (4, 3)]
+
+print (resuelveLab(laberinto,(2,0),(4,2)))
+#Devuelve--> [(2, 0), (3, 0), (4, 0), (4, 1), (4, 2)]
+
+print (resuelveLab(laberinto,(1,1),(4,2)))
+#Devuelve--> La entrada ingresada no tiene camino posible para recorrer.
+
+print (resuelveLab(laberinto,(0,0),(2,2)))
+#Devuelve--> La salida ingresada no es una salida valida para el laberinto.
