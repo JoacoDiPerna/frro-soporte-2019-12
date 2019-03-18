@@ -45,7 +45,7 @@ laberinto = [[False, False, False, True],
              [False, False, False, False]]
 
 print (resuelveLab(laberinto,(0,0),(4,3)))
-#Devuelve--> [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (4, 1), (4, 2), (4, 3)]
+#Devuelve--> [(0, 0), (1, 0), (2, 0), (2, 1), (3, 1), (4, 1), (4, 2), (4, 3)]
 
 print (resuelveLab(laberinto,(2,0),(4,1)))
 #Devuelve--> [(2, 0), (2, 1), (3, 1), (4, 1)]
