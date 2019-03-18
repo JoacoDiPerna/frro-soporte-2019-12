@@ -13,17 +13,15 @@ def resuelveLab( laberinto , entrada , salida ):
     elif laberinto[x][y] is True:
         return print('La entrada ingresada no tiene camino posible para recorrer.')
     else:
-        C = len(laberinto[0])
-        R = len(laberinto)
         if entrada == salida:
             return [salida]
-        elif entrada ==( R  - 1, C -1 ):
-            return [ ( R -1 , C -1 ) ]
-        if x + 1 < R and laberinto[x+1][y] is False:
+        elif entrada ==( m - 1, n - 1 ):
+            return [ ( m - 1 , n - 1 ) ]
+        if x + 1 < len(laberinto) and laberinto[x + 1][y] is False:
             a = resuelveLab( laberinto , ( x + 1 , y ) , salida )
             if a != None:
                 return [ (x , y ) ] + a
-        if y + 1 < C and laberinto[x][y+1] is False:
+        if y + 1 < len(laberinto[0]) and laberinto[x][y + 1] is False:
             b = resuelveLab( laberinto , (x , y + 1) , salida )
             if  b != None:
                 return [ ( x , y ) ] + b
