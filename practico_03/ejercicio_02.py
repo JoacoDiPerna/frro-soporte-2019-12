@@ -4,10 +4,21 @@
 import datetime
 
 from practico_03.ejercicio_01 import reset_tabla
+import sqlite3
+from getpass import getuser
 
 
 def agregar_persona(nombre, nacimiento, dni, altura):
-    return 0
+    conn = sqlite3.connect('C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
+    sql = ''' INSERT INTO personas(Nombre, FechaNacimiento, DNI, Altura)
+                 VALUES(?,?,?,?) '''
+    values = (nombre, datetime.datetime.strftime(nacimiento, "%Y-%m-%d"), dni, altura)
+    cur = conn.cursor()
+    cur.execute(sql, values)
+    cur.close()
+    conn.commit()
+    conn.close()
+    return cur.lastrowid
 
 
 @reset_tabla
@@ -16,6 +27,7 @@ def pruebas():
     id_marcela = agregar_persona('marcela gonzalez', datetime.datetime(1980, 1, 25), 12164492, 195)
     assert id_juan > 0
     assert id_marcela > id_juan
+
 
 if __name__ == '__main__':
     pruebas()

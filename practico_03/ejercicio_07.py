@@ -10,11 +10,44 @@
 import datetime
 
 from practico_03.ejercicio_02 import agregar_persona
+from practico_03.ejercicio_04 import buscar_persona
 from practico_03.ejercicio_06 import reset_tabla
+from getpass import getuser
+import sqlite3
 
 
 def agregar_peso(id_persona, fecha, peso):
-    pass
+    if buscar_persona(id_persona) and existe_registro_posterior(id_persona, fecha):
+        conn = sqlite3.connect('C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
+        sql = ''' INSERT INTO peso(idPersona, fecha, peso)
+                     VALUES(?,?,?) '''
+        values = (id_persona, datetime.datetime.strftime(fecha, "%Y-%m-%d"), peso)
+        cur = conn.cursor()
+        cur.execute(sql, values)
+        cur.close()
+        conn.commit()
+        conn.close()
+        return cur.lastrowid
+    else:
+        return False
+
+
+def existe_registro_posterior(id_persona, fecha):
+    conn = sqlite3.connect('C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
+    sql = "SELECT fecha FROM peso WHERE idPersona=? ORDER BY fecha DESC"
+    cur = conn.cursor()
+    cur.execute(sql, (id_persona,))
+    rows = cur.fetchall()
+    cur.close()
+    conn.commit()
+    conn.close()
+    if rows:
+        if rows[0][0] > fecha.strftime("%Y-%m-%d"):
+            return False
+        else:
+            return True
+    else:
+        return True
 
 
 @reset_tabla
@@ -22,9 +55,10 @@ def pruebas():
     id_juan = agregar_persona('juan perez', datetime.datetime(1988, 5, 15), 32165498, 180)
     assert agregar_peso(id_juan, datetime.datetime(2018, 5, 26), 80) > 0
     # id incorrecto
-    assert agregar_peso(200, datetime.datetime(1988, 5, 15), 80) == False
+    assert agregar_peso(200, datetime.datetime(1988, 5, 15), 80) is False
     # registro previo al 2018-05-26
-    assert agregar_peso(id_juan, datetime.datetime(2018, 5, 16), 80) == False
+    assert agregar_peso(id_juan, datetime.datetime(2018, 5, 16), 80) is False
+
 
 if __name__ == '__main__':
     pruebas()
