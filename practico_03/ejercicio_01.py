@@ -11,8 +11,14 @@ import sqlite3
 from getpass import getuser
 
 
+def create_connection(dbfile):
+    conn = sqlite3.connect(dbfile)
+    return conn
+
+
 def crear_tabla():
-    conn = sqlite3.connect('C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
+    conn = create_connection(
+        'C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
     cur = conn.cursor()
 
     cur.execute('CREATE TABLE IF NOT EXISTS `personas` ( \
@@ -27,7 +33,8 @@ def crear_tabla():
 
 
 def borrar_tabla():
-    conn = sqlite3.connect('C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
+    conn = create_connection(
+        'C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
     cur = conn.cursor()
     cur.execute('DROP TABLE `personas`')
     cur.close()

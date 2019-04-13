@@ -4,14 +4,14 @@
 # - Peso: Int()
 
 # Implementar la funcion borrar_tabla, que borra la tabla creada anteriormente.
-
+from practico_03.ejercicio_01 import create_connection
 from practico_03.ejercicio_01 import borrar_tabla, crear_tabla
 from getpass import getuser
-import sqlite3
 
 
 def crear_tabla_peso():
-    conn = sqlite3.connect('C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
+    conn = create_connection(
+        'C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
     cur = conn.cursor()
 
     cur.execute('CREATE TABLE IF NOT EXISTS peso (idPeso INTEGER PRIMARY KEY AUTOINCREMENT, \
@@ -27,7 +27,8 @@ def crear_tabla_peso():
 
 
 def borrar_tabla_peso():
-    conn = sqlite3.connect('C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
+    conn = create_connection(
+        'C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
     cur = conn.cursor()
     cur.execute('DROP TABLE peso')
     cur.close()
