@@ -7,49 +7,32 @@
 
 # Implementar la funcion borrar_tabla, que borra la tabla creada anteriormente.
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine
-from sqlalchemy import Column, VARCHAR, DATE, INTEGER, DECIMAL
+from sqlalchemy import MetaData, create_engine, Table, Column, VARCHAR, DATE, INTEGER, DECIMAL
 from sqlalchemy.orm import sessionmaker
+from getpass import getuser
 
-Base = declarative_base()
-
-
-def Persona(Base):
-    __tablename__ = 'personas'
-    id_persona = Column(INTEGER, primary_key=True)
-    nombre = Column(VARCHAR(30), nullable=False)
-    fecha_nacimiento = Column(DATE, nullable=False)
-    dni = Column(INTEGER, nullable=False)
-    altura = Column(DECIMAL, nullable=False)
-
-
-engine = create_engine('sqlite:///:memory:', echo=True)
-Base.metadata.bind = engine
-DBSession = sessionmaker()
-DBSession.bind = engine
+engine = create_engine('sqlite:///C:\\Users\\' +
+                       getuser() + '\\Desktop\\tp3a_python.db', echo=True)
+meta = MetaData()
+DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+personas = Table('personas', meta, Column('id_persona', INTEGER, primary_key=True), Column('nombre', VARCHAR(30), nullable=False), Column(
+    'fecha_nacimiento', DATE, nullable=False), Column('dni', INTEGER, nullable=False), Column('altura', DECIMAL, nullable=False))
 
 
 def crear_tabla():
-    Base.metadata.create_all(engine)
+    meta.create_all(engine)
 
 
 def borrar_tabla():
-    table = metadata.tables.get('personas')
-    if table is not None:
-        logging.info(f'Deleting {'personas'} table')
-        base.metadata.drop_all(engine, [table], checkfirst=True)
+    meta.drop_all(engine)
+
 
 # no modificar
-
-
 def reset_tabla(func):
     def func_wrapper():
         crear_tabla()
         func()
         borrar_tabla()
     return func_wrapper
-
-
-crear_tabla()
-borrar_tabla()

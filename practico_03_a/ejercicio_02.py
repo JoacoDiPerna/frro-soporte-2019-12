@@ -2,24 +2,16 @@
 # y devuelva los datos ingresados el id del nuevo registro.
 
 import datetime
-from practico_03.ejercicio_01 import create_connection
-from practico_03.ejercicio_01 import reset_tabla
-from getpass import getuser
+from practico_03_a.ejercicio_01 import reset_tabla, personas, engine
 
 
 def agregar_persona(nombre, nacimiento, dni, altura):
-    conn = create_connection(
-        'C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
-    sql = ''' INSERT INTO personas(Nombre, FechaNacimiento, DNI, Altura)
-                 VALUES(?,?,?,?) '''
-    values = (nombre, datetime.datetime.strftime(
-        nacimiento, "%Y-%m-%d"), dni, altura)
-    cur = conn.cursor()
-    cur.execute(sql, values)
-    cur.close()
-    conn.commit()
-    conn.close()
-    return cur.lastrowid
+    ins = personas.insert()
+    ins = personas.insert().values(
+        nombre=nombre, fecha_nacimiento=nacimiento, dni=dni, altura=altura)
+    conn = engine.connect()
+    result = conn.execute(ins)
+    return result.lastrowid
 
 
 @reset_tabla

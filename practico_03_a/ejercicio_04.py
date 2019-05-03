@@ -3,23 +3,15 @@
 # Si no encuentra ningun registro, devuelve False.
 
 import datetime
-from practico_03.ejercicio_01 import create_connection
-from practico_03.ejercicio_01 import reset_tabla
-from practico_03.ejercicio_02 import agregar_persona
-from getpass import getuser
+from practico_03_a.ejercicio_01 import reset_tabla, personas, engine
+from practico_03_a.ejercicio_02 import agregar_persona
 
 
 def buscar_persona(id_persona):
-    conn = create_connection(
-        'C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
-    sql = "SELECT * FROM personas WHERE id_persona=? ORDER BY id_persona ASC"
-    cur = conn.cursor()
-    cur.execute(sql, (id_persona,))
-    rows = cur.fetchall()
-    cur.close()
-    conn.commit()
-    conn.close()
-    return False if not rows else rows[0]
+    slt = personas.select().where(personas.c.id_persona == id_persona)
+    conn = engine.connect()
+    result = conn.execute(slt)
+    return False if not result.returns_rows else result.first()._row
 
 
 @reset_tabla
