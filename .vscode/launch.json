@@ -28,7 +28,7 @@
             "name": "Python: Module",
             "type": "python",
             "request": "launch",
-            "module": "practico_03.ejercicio_08",
+            "module": "practico_03_a.ejercicio_01",
             "console": "integratedTerminal"
         },
         {
