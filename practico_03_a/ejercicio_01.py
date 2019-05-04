@@ -7,26 +7,26 @@
 
 # Implementar la funcion borrar_tabla, que borra la tabla creada anteriormente.
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import MetaData, create_engine, Table, Column, VARCHAR, DATE, INTEGER, DECIMAL
+from sqlalchemy import MetaData, create_engine, Table, Column, VARCHAR, DATE, INTEGER
 from sqlalchemy.orm import sessionmaker
 from getpass import getuser
 
 engine = create_engine('sqlite:///C:\\Users\\' +
                        getuser() + '\\Desktop\\tp3a_python.db', echo=True)
 meta = MetaData()
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
 
 personas = Table('personas', meta, Column('id_persona', INTEGER, primary_key=True), Column('nombre', VARCHAR(30), nullable=False), Column(
-    'fecha_nacimiento', DATE, nullable=False), Column('dni', INTEGER, nullable=False), Column('altura', DECIMAL, nullable=False))
+    'fecha_nacimiento', DATE, nullable=False), Column('dni', INTEGER, nullable=False), Column('altura', INTEGER, nullable=False))
 
 
 def crear_tabla():
-    meta.create_all(engine)
+    # meta.create_all(engine)
+    personas.create(engine)
 
 
 def borrar_tabla():
-    meta.drop_all(engine)
+    # meta.drop_all(engine)
+    personas.drop(engine)
 
 
 # no modificar

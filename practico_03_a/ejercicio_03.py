@@ -7,16 +7,16 @@ from practico_03_a.ejercicio_02 import agregar_persona
 
 
 def borrar_persona(id_persona):
-    dlt = personas.delete().where(personas.c.id_persona == id_persona)
+    stmt = personas.delete().where(personas.c.id_persona == id_persona)
     conn = engine.connect()
-    result = conn.execute(dlt)
+    result = conn.execute(stmt)
     return True if result.rowcount >= 1 else False
 
 
 @reset_tabla
 def pruebas():
     assert borrar_persona(agregar_persona(
-        'juan perez', datetime.datetime(1988, 5, 15), 32165498, 180))
+        'juan perez', datetime.date(1988, 5, 15), 32165498, 180))
     assert borrar_persona(1123) is False
 
 

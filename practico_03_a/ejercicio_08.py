@@ -15,25 +15,19 @@
 # - False en caso de no cumplir con alguna validacion.
 
 import datetime
-from practico_03.ejercicio_01 import create_connection
-from practico_03.ejercicio_02 import agregar_persona
-from practico_03.ejercicio_06 import reset_tabla
-from practico_03.ejercicio_07 import agregar_peso
-from practico_03.ejercicio_04 import buscar_persona
-from getpass import getuser
+from practico_03_a.ejercicio_01 import engine
+from practico_03_a.ejercicio_02 import agregar_persona
+from practico_03_a.ejercicio_06 import reset_tabla, pesos
+from practico_03_a.ejercicio_07 import agregar_peso
+from practico_03_a.ejercicio_04 import buscar_persona
+from sqlalchemy import text
 
 
 def listar_pesos(id_persona):
     if buscar_persona(id_persona):
-        conn = create_connection(
-            'C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
-        sql = "SELECT fecha, peso FROM peso WHERE idPersona=? ORDER BY fecha ASC"
-        cur = conn.cursor()
-        cur.execute(sql, (id_persona,))
-        rows = cur.fetchall()
-        cur.close()
-        conn.commit()
-        conn.close()
+        t = text("SELECT fecha, peso FROM pesos WHERE id_persona = :x")
+        conn = engine.connect()
+        rows = conn.execute(t, x=id_persona).fetchall()
         return False if not rows else rows
     else:
         return False
@@ -42,9 +36,9 @@ def listar_pesos(id_persona):
 @reset_tabla
 def pruebas():
     id_juan = agregar_persona(
-        'juan perez', datetime.datetime(1988, 5, 15), 32165498, 180)
-    agregar_peso(id_juan, datetime.datetime(2018, 5, 1), 80)
-    agregar_peso(id_juan, datetime.datetime(2018, 6, 1), 85)
+        'juan perez', datetime.date(1988, 5, 15), 32165498, 180)
+    agregar_peso(id_juan, datetime.date(2018, 5, 1), 80)
+    agregar_peso(id_juan, datetime.date(2018, 6, 1), 85)
     pesos_juan = listar_pesos(id_juan)
     pesos_esperados = [
         ('2018-05-01', 80),

@@ -4,36 +4,19 @@
 # - Peso: Int()
 
 # Implementar la funcion borrar_tabla, que borra la tabla creada anteriormente.
-from practico_03.ejercicio_01 import create_connection
-from practico_03.ejercicio_01 import borrar_tabla, crear_tabla
-from getpass import getuser
+from practico_03_a.ejercicio_01 import borrar_tabla, crear_tabla, meta, engine
+from sqlalchemy import Table, Column, INTEGER, DATE, ForeignKey
+
+pesos = Table('pesos', meta, Column('id_peso', INTEGER, primary_key=True), Column('id_persona', INTEGER, ForeignKey('personas.id_persona'), nullable=False), Column(
+    'fecha', DATE, nullable=False), Column('peso', INTEGER, nullable=False))
 
 
 def crear_tabla_peso():
-    conn = create_connection(
-        'C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
-    cur = conn.cursor()
-
-    cur.execute('CREATE TABLE IF NOT EXISTS peso (idPeso INTEGER PRIMARY KEY AUTOINCREMENT, \
-                                                  idPersona INTEGER, \
-                                                  fecha DATETIME NULL, \
-                                                  peso INT NULL, \
-                                                  CONSTRAINT fk_personas \
-                                                  FOREIGN KEY (idPersona) \
-                                                  REFERENCES personas(id_persona)); ')
-    cur.close()
-    conn.commit()
-    conn.close()
+    pesos.create(engine)
 
 
 def borrar_tabla_peso():
-    conn = create_connection(
-        'C:\\Users\\' + getuser() + '\\Desktop\\tps_python.db')
-    cur = conn.cursor()
-    cur.execute('DROP TABLE peso')
-    cur.close()
-    conn.commit()
-    conn.close()
+    pesos.drop(engine)
 
 
 # no modificar
@@ -44,5 +27,4 @@ def reset_tabla(func):
         func()
         borrar_tabla_peso()
         borrar_tabla()
-
     return func_wrapper
