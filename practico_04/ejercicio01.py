@@ -41,7 +41,6 @@ app.geometry("295x100")
 # Variables de entrada.
 valor1 = IntVar()
 valor2 = IntVar()
-resultado = ""
 
 
 # Widgets de entrada.
