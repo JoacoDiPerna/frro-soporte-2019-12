@@ -15,7 +15,7 @@
             "name": "Python: Module",
             "type": "python",
             "request": "launch",
-            "module": "practico_04.ejercicio01",
+            "module": "practico_04.ejercicio02",
             "console": "integratedTerminal"
         }
     ]
