@@ -1,58 +1,98 @@
 ## 1 Ejercicio Hacer un formulario tkinter que es una calculadora, tiene 2 entry para ingresar los valores V1 y V2.
 ## Y 4 botones de operaciones para las operaciones respectivas + , - , * , / ,
-## al cliquearlos muestre el resultado de aplicar el operador respectivo en los V1 y V2 . 
+## al cliquearlos muestre el resultado de aplicar el operador respectivo en los V1 y V2 .
 
 from tkinter import *
+from math import *
+from enum import Enum
 
 
-def clear_widget_text(widget):
-    widget['text'] = ""
+class Opciones(Enum):
+    SUMA = 1
+    RESTA = 2
+    DIVISION = 3
+    MULTIPLICACION = 4
 
 
 def resul(op):
-    Label(app, text='                                                ',background='light grey').place(x=100, y=147)
-    x = var1.get()
-    y = var2.get()
-    if op == 1:
-        Label(app, text='%s + %s = %s' % (x, y, x+y),background='light grey').place(x=100, y=147)
-    elif op == 2:
-        Label(app, text='%s - %s = %s' % (x, y, x-y),background='light grey').place(x=100, y=147)
-    elif op == 3:
+    auxRes = ""
+    x = valor1.get()
+    y = valor2.get()
+    if op == Opciones.SUMA.value:
+        auxRes = "%s + %s = %s" % (x, y, x + y)
+    elif op == Opciones.RESTA.value:
+        auxRes = "%s - %s = %s" % (x, y, x - y)
+    elif op == Opciones.DIVISION.value:
         try:
-            Label(app, text='%s / %s = %s' % (x, y, x/y),background='light grey').place(x=100, y=147)
+            auxRes = "%s / %s = %s" % (x, y, x / y)
         except:
-            Label(app, text='ERROR',background='light grey').place(x=100, y=147)
-    elif op == 4:
-        Label(app, text='%s * %s = %s' % (x, y, x*y),background='light grey').place(x=100, y=147)
-    return 0
+            auxRes = "Error"
+    elif op == Opciones.MULTIPLICACION.value:
+        auxRes = "%s * %s = %s" % (x, y, x * y)
+    resultado.set(auxRes)
 
+
+# Definición de la aplicación Tkinter.
 app = Tk()
 app.configure(background="white")
 app.title("Calculadora")
-app.geometry("270x200")
+app.geometry("295x100")
 
-#variable de entrada
-var1 = IntVar()
-var2 = IntVar()
-
-
-# Text box de entrada
-lbl1 = Label(app, text= 'Primer valor').place(x=5, y=5)
-txtbx1 = Entry(app, textvariable=var1,bg='light grey').place(x=100, y=5)
-lbl2 = Label(app, text= 'Segundo valor').place(x=5, y=30)
-txtbx2 = Entry(app, textvariable=var2,bg='light grey').place(x=100, y=32)
+# Variables de entrada.
+valor1 = IntVar()
+valor2 = IntVar()
+resultado = ""
 
 
-# Text box de salida
-lbl3 = Label(app, text= 'Resultado: ').place(x=5, y=147)
-#txtbox_resul = Entry(app, textvariable=resultado,bg='light grey').place(x=100, y=150)
+# Widgets de entrada.
+lblValor1 = Label(app, text="Primer valor", bg="white").place(x=5, y=10)
+txtValor1 = Entry(app, textvariable=valor1, bg="light grey").place(x=100, y=10)
+lblValor2 = Label(app, text="Segundo valor", bg="white").place(x=5, y=40)
+txtValor2 = Entry(app, textvariable=valor2, bg="light grey").place(x=100, y=40)
 
-Button(app, text=' + ', bg='white',command= lambda: resul(1), width=5).place(x=5, y=85)
 
-Button(app, text=' - ', bg='white',command= lambda: resul(2), height=1, width=5).place(x=65, y=85)
+# Widgets de salida
+lblResultado = Label(
+    app, text="Resultado: ", background="white", font=("arial", 10, "bold")
+).place(x=5, y=70)
+resultado = StringVar()
+txtResultado = Label(app, textvariable=resultado, background="white").place(x=100, y=70)
 
-Button(app, text=' / ', bg='white',command=lambda: resul(3), height=1, width=5).place(x=120, y=85)
+# Botones
+Button(
+    app,
+    text=" + ",
+    bg="white",
+    command=lambda: resul(Opciones.SUMA.value),
+    height=1,
+    width=2,
+).place(x=230, y=6)
 
-Button(app, text=' x ', bg='white',command=lambda: resul(4), height=1, width=5).place(x=175, y=85)
+Button(
+    app,
+    text=" - ",
+    bg="white",
+    command=lambda: resul(Opciones.RESTA.value),
+    height=1,
+    width=2,
+).place(x=260, y=6)
+
+Button(
+    app,
+    text=" / ",
+    bg="white",
+    command=lambda: resul(Opciones.DIVISION.value),
+    height=1,
+    width=2,
+).place(x=230, y=34)
+
+Button(
+    app,
+    text=" x ",
+    bg="white",
+    command=lambda: resul(Opciones.MULTIPLICACION.value),
+    height=1,
+    width=2,
+).place(x=260, y=34)
 
 app.mainloop()
