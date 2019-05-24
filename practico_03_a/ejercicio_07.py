@@ -8,11 +8,10 @@
 # - False en caso de no cumplir con alguna validacion.
 
 import datetime
-from practico_03_a.ejercicio_01 import personas, engine
+from practico_03_a.ejercicio_01 import engine
 from practico_03_a.ejercicio_02 import agregar_persona
 from practico_03_a.ejercicio_04 import buscar_persona
 from practico_03_a.ejercicio_06 import reset_tabla, pesos
-from sqlalchemy import desc
 
 
 def agregar_peso(id_persona, fecha, peso):

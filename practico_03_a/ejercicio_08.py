@@ -20,14 +20,15 @@ from practico_03_a.ejercicio_02 import agregar_persona
 from practico_03_a.ejercicio_06 import reset_tabla, pesos
 from practico_03_a.ejercicio_07 import agregar_peso
 from practico_03_a.ejercicio_04 import buscar_persona
-from sqlalchemy import text
+from sqlalchemy import select
 
 
 def listar_pesos(id_persona):
     if buscar_persona(id_persona):
-        t = text("SELECT fecha, peso FROM pesos WHERE id_persona = :x")
+        stmt = select([pesos.c.fecha, pesos.c.peso]).where(
+            pesos.c.id_persona == id_persona)
         conn = engine.connect()
-        rows = conn.execute(t, x=id_persona).fetchall()
+        rows = conn.execute(stmt).fetchall()
         return False if not rows else rows
     else:
         return False
@@ -41,8 +42,8 @@ def pruebas():
     agregar_peso(id_juan, datetime.date(2018, 6, 1), 85)
     pesos_juan = listar_pesos(id_juan)
     pesos_esperados = [
-        ('2018-05-01', 80),
-        ('2018-06-01', 85),
+        (datetime.date(2018, 5, 1), 80),
+        (datetime.date(2018, 6, 1), 85),
     ]
     assert pesos_juan == pesos_esperados
     # id incorrecto

@@ -8,7 +8,6 @@
 # Implementar la funcion borrar_tabla, que borra la tabla creada anteriormente.
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import MetaData, create_engine, Table, Column, VARCHAR, DATE, INTEGER
-from sqlalchemy.orm import sessionmaker
 from getpass import getuser
 
 engine = create_engine('sqlite:///C:\\Users\\' +
