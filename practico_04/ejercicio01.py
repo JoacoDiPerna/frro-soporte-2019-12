@@ -3,6 +3,7 @@
 ## al cliquearlos muestre el resultado de aplicar el operador respectivo en los V1 y V2 .
 
 from tkinter import *
+from tkinter import messagebox
 from math import *
 from enum import Enum
 
@@ -11,6 +12,7 @@ app = Tk()
 app.configure(background="white")
 app.title("Calculadora")
 app.geometry("295x100")
+app.resizable(False, False)
 
 # Variables de entrada.
 valor1 = IntVar()
@@ -19,11 +21,13 @@ valor2 = IntVar()
 # Variable de salida.
 resultado = StringVar()
 
+
 class Opciones(Enum):
     SUMA = 1
     RESTA = 2
     DIVISION = 3
     MULTIPLICACION = 4
+
 
 def createControls():
     # Widgets de entrada.
@@ -36,7 +40,9 @@ def createControls():
     lblResultado = Label(
         app, text="Resultado: ", background="white", font=("arial", 10, "bold")
     ).place(x=5, y=70)
-    txtResultado = Label(app, textvariable=resultado, background="white").place(x=100, y=70)
+    txtResultado = Label(app, textvariable=resultado, background="white").place(
+        x=100, y=70
+    )
 
     # Botones.
     Button(
@@ -75,23 +81,31 @@ def createControls():
         width=2,
     ).place(x=260, y=34)
 
+
 # Resultado operación.
 def resul(op):
-    auxRes = ""
-    x = valor1.get()
-    y = valor2.get()
-    if op == Opciones.SUMA.value:
-        auxRes = "%s + %s = %s" % (x, y, x + y)
-    elif op == Opciones.RESTA.value:
-        auxRes = "%s - %s = %s" % (x, y, x - y)
-    elif op == Opciones.DIVISION.value:
-        try:
-            auxRes = "%s / %s = %s" % (x, y, x / y)
-        except:
-            auxRes = "Error"
-    elif op == Opciones.MULTIPLICACION.value:
-        auxRes = "%s * %s = %s" % (x, y, x * y)
-    resultado.set(auxRes)
+    try:
+        auxRes = ""
+        x = valor1.get()
+        y = valor2.get()
+        if op == Opciones.SUMA.value:
+            auxRes = "%s + %s = %s" % (x, y, x + y)
+        elif op == Opciones.RESTA.value:
+            auxRes = "%s - %s = %s" % (x, y, x - y)
+        elif op == Opciones.DIVISION.value:
+            try:
+                auxRes = "%s / %s = %s" % (x, y, x / y)
+            except:
+                auxRes = "Error"
+        elif op == Opciones.MULTIPLICACION.value:
+            auxRes = "%s * %s = %s" % (x, y, x * y)
+        resultado.set(auxRes)
+    except:
+        messagebox.showerror(
+            "Error", "Se ha producido un error al realizar la operación."
+        )
+        resultado.set("")
+
 
 if __name__ == "__main__":
     createControls()
