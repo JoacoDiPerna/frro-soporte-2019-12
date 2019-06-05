@@ -5,16 +5,30 @@
 from tkinter import *
 from tkinter import messagebox
 
-app = Tk()
-app.configure(background="white")
-app.title("Calculadora")
-app.geometry("210x170")
-app.resizable(False, False)
-frame = Frame(app, relief=FLAT, background="white")
+root = Tk()
+root.configure(background="white")
+root.title("Calculadora")
+root.geometry("210x170")
+root.resizable(False, False)
+# Centra la ventana.
+root.geometry(
+    "+{}+{}".format(
+        int(root.winfo_screenwidth() / 2 - root.winfo_reqwidth() / 2),
+        int(root.winfo_screenheight() / 2 - root.winfo_reqheight() / 2),
+    )
+)
+root.protocol("WM_DELETE_WINDOW", lambda: closeWindow(root))
+
+frame = Frame(root, relief=FLAT, background="white")
 frame.grid(column=0, row=0, padx=5, pady=5)
 
 # variable de entrada
 resultado = StringVar()
+
+
+def closeWindow(window):
+    window.destroy()
+    window.quit()
 
 
 def createControls():
@@ -133,4 +147,4 @@ def error():
 
 if __name__ == "__main__":
     createControls()
-    app.mainloop()
+    root.mainloop()

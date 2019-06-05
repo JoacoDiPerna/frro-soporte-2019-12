@@ -8,11 +8,19 @@ from math import *
 from enum import Enum
 
 # Definición de la aplicación Tkinter.
-app = Tk()
-app.configure(background="white")
-app.title("Calculadora")
-app.geometry("295x100")
-app.resizable(False, False)
+root = Tk()
+root.configure(background="white")
+root.title("Calculadora")
+root.geometry("295x100")
+root.resizable(False, False)
+# Centra la ventana.
+root.geometry(
+    "+{}+{}".format(
+        int(root.winfo_screenwidth() / 2 - root.winfo_reqwidth() / 2),
+        int(root.winfo_screenheight() / 2 - root.winfo_reqheight() / 2),
+    )
+)
+root.protocol("WM_DELETE_WINDOW", lambda: closeWindow(root))
 
 # Variables de entrada.
 valor1 = IntVar()
@@ -29,24 +37,29 @@ class Opciones(Enum):
     MULTIPLICACION = 4
 
 
+def closeWindow(window):
+    window.destroy()
+    window.quit()
+
+
 def createControls():
     # Widgets de entrada.
-    lblValor1 = Label(app, text="Primer valor", bg="white").place(x=5, y=10)
-    txtValor1 = Entry(app, textvariable=valor1, bg="light grey").place(x=100, y=10)
-    lblValor2 = Label(app, text="Segundo valor", bg="white").place(x=5, y=40)
-    txtValor2 = Entry(app, textvariable=valor2, bg="light grey").place(x=100, y=40)
+    lblValor1 = Label(root, text="Primer valor", bg="white").place(x=5, y=10)
+    txtValor1 = Entry(root, textvariable=valor1, bg="light grey").place(x=100, y=10)
+    lblValor2 = Label(root, text="Segundo valor", bg="white").place(x=5, y=40)
+    txtValor2 = Entry(root, textvariable=valor2, bg="light grey").place(x=100, y=40)
 
     # Widgets de salida
     lblResultado = Label(
-        app, text="Resultado: ", background="white", font=("arial", 10, "bold")
+        root, text="Resultado: ", background="white", font=("arial", 10, "bold")
     ).place(x=5, y=70)
-    txtResultado = Label(app, textvariable=resultado, background="white").place(
+    txtResultado = Label(root, textvariable=resultado, background="white").place(
         x=100, y=70
     )
 
     # Botones.
     Button(
-        app,
+        root,
         text=" + ",
         bg="white",
         command=lambda: resul(Opciones.SUMA.value),
@@ -55,7 +68,7 @@ def createControls():
     ).place(x=230, y=6)
 
     Button(
-        app,
+        root,
         text=" - ",
         bg="white",
         command=lambda: resul(Opciones.RESTA.value),
@@ -64,7 +77,7 @@ def createControls():
     ).place(x=260, y=6)
 
     Button(
-        app,
+        root,
         text=" / ",
         bg="white",
         command=lambda: resul(Opciones.DIVISION.value),
@@ -73,7 +86,7 @@ def createControls():
     ).place(x=230, y=34)
 
     Button(
-        app,
+        root,
         text=" x ",
         bg="white",
         command=lambda: resul(Opciones.MULTIPLICACION.value),
@@ -109,4 +122,4 @@ def resul(op):
 
 if __name__ == "__main__":
     createControls()
-    app.mainloop()
+    root.mainloop()
