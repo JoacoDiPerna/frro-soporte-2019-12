@@ -1,7 +1,7 @@
 # Implementar los metodos de la capa de datos de socios.
 
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, VARCHAR, INTEGER
 from sqlalchemy.orm import sessionmaker
 from practico_05.ejercicio_01 import Base, Socio
 
@@ -110,4 +110,4 @@ def pruebas():
 
 
 if __name__ == '__main__':
-    pruebas()
+pruebas()
