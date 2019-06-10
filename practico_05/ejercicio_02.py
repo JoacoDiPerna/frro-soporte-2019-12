@@ -46,8 +46,6 @@ class DatosSocio(object):
         self.session.add(socio)
         self.session.commit()
         return socio
-        # socio_alta = self.buscar(socio.id_socio)
-        # return socio_alta
 
     def baja(self, id_socio):
         socio = self.buscar(id_socio)
