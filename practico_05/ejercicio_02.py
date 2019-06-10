@@ -1,16 +1,19 @@
 # Implementar los metodos de la capa de datos de socios.
 
 
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from practico_05.ejercicio_01 import Base, Socio
+from getpass import getuser
 
 
 class DatosSocio(object):
 
     def __init__(self):
-        engine = create_engine('sqlite:///socios.db')
+        engine = create_engine('sqlite:///C:\\Users\\' +
+                               getuser() + '\\Desktop\\tp5_python.db', echo=True)
         Base.metadata.bind = engine
+        Base.metadata.create_all(engine)
         db_session = sessionmaker()
         db_session.bind = engine
         self.session = db_session()
@@ -36,18 +39,19 @@ class DatosSocio(object):
             self.session.query(Socio).delete()
             return True
         except:
-            
+
             return False
 
     def alta(self, socio):
         self.session.add(socio)
         self.session.commit()
-        socio_alta = self.buscar(socio.id_socio)
-        return socio_alta
+        return socio
+        # socio_alta = self.buscar(socio.id_socio)
+        # return socio_alta
 
     def baja(self, id_socio):
         socio = self.buscar(id_socio)
-        if socio is None :
+        if socio is None:
             return False
         else:
             self.session.delete(socio)
@@ -67,27 +71,28 @@ def pruebas():
     # alta
     datos = DatosSocio()
     socio = datos.alta(Socio(dni=12345678, nombre='Juan', apellido='Perez'))
-    assert socio.id > 0
+    assert socio.id_socio > 0
 
     # baja
-    assert datos.baja(socio.id) == True
+    assert datos.baja(socio.id_socio) == True
 
     # buscar
-    socio_2 = datos.alta(Socio(dni=12345679, nombre='Carlos', apellido='Perez'))
-    assert datos.buscar(socio_2.id) == socio_2
+    socio_2 = datos.alta(
+        Socio(dni=12345679, nombre='Carlos', apellido='Perez'))
+    assert datos.buscar(socio_2.id_socio) == socio_2
 
     # buscar dni
-    socio_2 = datos.alta(Socio(dni=12345679, nombre='Carlos', apellido='Perez'))
-    assert datos.buscar(socio_2.dni) == socio_2
+    assert datos.buscar_dni(socio_2.dni) == socio_2
 
     # modificacion
-    socio_3 = datos.alta(Socio(dni=12345680, nombre='Susana', apellido='Gimenez'))
+    socio_3 = datos.alta(
+        Socio(dni=12345680, nombre='Susana', apellido='Gimenez'))
     socio_3.nombre = 'Moria'
     socio_3.apellido = 'Casan'
     socio_3.dni = 13264587
     datos.modificacion(socio_3)
-    socio_3_modificado = datos.buscar(socio_3.id)
-    assert socio_3_modificado.id == socio_3.id
+    socio_3_modificado = datos.buscar(socio_3.id_socio)
+    assert socio_3_modificado.id_socio == socio_3.id_socio
     assert socio_3_modificado.nombre == 'Moria'
     assert socio_3_modificado.apellido == 'Casan'
     assert socio_3_modificado.dni == 13264587

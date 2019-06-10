@@ -9,10 +9,12 @@ from sqlalchemy import Column, Integer, String
 
 Base = declarative_base()
 
+
 class Socio(Base):
     __tablename__ = 'socios'
 
-    id_socio = Column(Integer, primary_key = True, unique = True, autoincrement=True)
-    dni = Column(Integer,nullable=False, unique = True)
+    id_socio = Column(Integer, primary_key=True,
+                      unique=True, autoincrement=True)
+    dni = Column(Integer, nullable=False, unique=True)
     nombre = Column(String(250), nullable=False)
     apellido = Column(String(250), nullable=False)
