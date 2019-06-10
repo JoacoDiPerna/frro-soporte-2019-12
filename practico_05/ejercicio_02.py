@@ -1,7 +1,7 @@
 # Implementar los metodos de la capa de datos de socios.
 
 
-from sqlalchemy import create_engine, VARCHAR, INTEGER
+from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker
 from practico_05.ejercicio_01 import Base, Socio
 
@@ -16,60 +16,51 @@ class DatosSocio(object):
         self.session = db_session()
 
     def buscar(self, id_socio):
-        """
-        Devuelve la instancia del socio, dado su id.
-        Devuelve None si no encuentra nada.
-        :rtype: Socio
-        """
-        return
+        try:
+            return self.session.query(Socio).filter_by(id_socio=id_socio).first()
+        except:
+            return None
 
     def buscar_dni(self, dni_socio):
-        """
-        Devuelve la instancia del socio, dado su dni.
-        Devuelve None si no encuentra nada.
-        :rtype: Socio
-        """
-        return
+        try:
+            return self.session.query(Socio).filter_by(dni=dni_socio).first()
+        except:
+            return None
 
     def todos(self):
-        """
-        Devuelve listado de todos los socios en la base de datos.
-        :rtype: list
-        """
-        return []
+        socios = self.session.query(Socio).all()
+        return socios
 
     def borrar_todos(self):
-        """
-        Borra todos los socios de la base de datos.
-        Devuelve True si el borrado fue exitoso.
-        :rtype: bool
-        """
-        return False
+        try:
+            self.session.query(Socio).delete()
+            return True
+        except:
+            
+            return False
 
     def alta(self, socio):
-        """
-        Devuelve el Socio luego de darlo de alta.
-        :type socio: Socio
-        :rtype: Socio
-        """
-        return socio
+        self.session.add(socio)
+        self.session.commit()
+        socio_alta = self.buscar(socio.id_socio)
+        return socio_alta
 
     def baja(self, id_socio):
-        """
-        Borra el socio especificado por el id.
-        Devuelve True si el borrado fue exitoso.
-        :rtype: bool
-        """
-        return False
+        socio = self.buscar(id_socio)
+        if socio is None :
+            return False
+        else:
+            self.session.delete(socio)
+            self.session.commit()
+            return True
 
     def modificacion(self, socio):
-        """
-        Guarda un socio con sus datos modificados.
-        Devuelve el Socio modificado.
-        :type socio: Socio
-        :rtype: Socio
-        """
-        return socio
+        socio_enc = self.buscar(socio.id_socio)
+        socio_enc.dni = socio.dni
+        socio_enc.nombre = socio.nombre
+        socio_enc.apellido = socio.apellido
+        self.session.commit()
+        return socio_enc
 
 
 def pruebas():
@@ -110,4 +101,4 @@ def pruebas():
 
 
 if __name__ == '__main__':
-pruebas()
+    pruebas()
