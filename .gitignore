@@ -105,5 +105,4 @@ ENV/
 #VS Code
 .vscode/
 
-#Lib SQLAlchemy
 .sqlalchemy/
