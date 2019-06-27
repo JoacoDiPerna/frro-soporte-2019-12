@@ -20,7 +20,7 @@ class NegocioSocio(object):
 
     MIN_CARACTERES = 3
     MAX_CARACTERES = 15
-    MAX_SOCIOS = 2
+    MAX_SOCIOS = 3
 
     def __init__(self):
         self.datos = DatosSocio()
@@ -32,7 +32,6 @@ class NegocioSocio(object):
         :rtype: Socio
         """
         try:
-            # return self.session.query(Socio).filter_by(id_socio=id_socio).first()
             return datos.buscar(id_socio)
         except:
             return None
@@ -44,8 +43,7 @@ class NegocioSocio(object):
         :rtype: Socio
         """
         try:
-            # return self.session.query(Socio).filter_by(dni=dni_socio).first()
-            return datos.buscar_dni(dni_socio)
+            return self.datos.buscar_dni(dni_socio)
         except:
             return None
 
@@ -54,9 +52,8 @@ class NegocioSocio(object):
         Devuelve listado de todos los socios.
         :rtype: list
         """
-        # return self.session.query(Socio).all()
         return self.datos.todos()
-        
+
     def alta(self, socio):
         """
         Da de alta un socio.
@@ -66,10 +63,8 @@ class NegocioSocio(object):
         :type socio: Socio
         :rtype: bool
         """
-        if (not self.regla_1(socio) or not self.regla_2(socio) or not self.regla_3()):
+        if not self.regla_1(socio) or not self.regla_2(socio) or not self.regla_3():
             return False
-        # self.session.add(socio)
-        # self.session.commit()
         self.datos.alta(socio)
         return True
 
@@ -83,8 +78,6 @@ class NegocioSocio(object):
         if socio is None:
             return False
         else:
-            # self.session.delete(socio)
-            # self.session.commit()
             self.datos.baja(socio)
             return True
 
@@ -97,13 +90,8 @@ class NegocioSocio(object):
         :type socio: Socio
         :rtype: bool
         """
-        # socio_enc = self.buscar(socio.id_socio)
-        # socio_enc.dni = socio.dni
-        # socio_enc.nombre = socio.nombre
-        # socio_enc.apellido = socio.apellido
-        if (not self.regla_2(socio)):
+        if not self.regla_2(socio):
             return False
-        # self.session.commit()
         self.datos.modificacion(socio)
         return True
 
@@ -114,7 +102,7 @@ class NegocioSocio(object):
         :raise: DniRepetido
         :return: bool
         """
-        if(self.buscar_dni(socio.dni) != None):
+        if self.buscar_dni(socio.dni) is not None:
             raise DniRepetido("El DNI ya existe.")
         return True
 
@@ -125,8 +113,15 @@ class NegocioSocio(object):
         :raise: LongitudInvalida
         :return: bool
         """
-        if not(len(socio.nombre) > self.MIN_CARACTERES and len(socio.nombre) < self.MAX_CARACTERES and len(socio.apellido) > self.MIN_CARACTERES and len(socio.apellido) < self.MAX_CARACTERES):
-            raise LongitudInvalida("El nombre/apellido del socio debe ser mayor a 3 caracteres y menor a 15 caracteres.")
+        if not (
+            len(socio.nombre) > self.MIN_CARACTERES
+            and len(socio.nombre) < self.MAX_CARACTERES
+            and len(socio.apellido) > self.MIN_CARACTERES
+            and len(socio.apellido) < self.MAX_CARACTERES
+        ):
+            raise LongitudInvalida(
+                "El nombre/apellido del socio debe ser mayor a 3 caracteres y menor a 15 caracteres."
+            )
         return True
 
     def regla_3(self):
@@ -135,6 +130,6 @@ class NegocioSocio(object):
         :raise: MaximoAlcanzado
         :return: bool
         """
-        if(len(self.todos()) >= self.MAX_SOCIOS):
+        if len(self.todos()) >= self.MAX_SOCIOS:
             raise MaximoAlcanzado("Se alcanzó el número máximo de socios.")
         return True
