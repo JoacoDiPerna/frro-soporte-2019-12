@@ -32,7 +32,7 @@ class NegocioSocio(object):
         :rtype: Socio
         """
         try:
-            return datos.buscar(id_socio)
+            return self.datos.buscar(id_socio)
         except:
             return None
 
@@ -78,7 +78,7 @@ class NegocioSocio(object):
         if socio is None:
             return False
         else:
-            self.datos.baja(socio)
+            self.datos.baja(socio.id_socio)
             return True
 
     def modificacion(self, socio):
